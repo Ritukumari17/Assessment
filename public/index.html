@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Assessment</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- CSS Styling -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Toast Notification Hub -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- AUTHENTICATION SCREEN -->
+  <div id="auth-screen" class="auth-screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <div class="logo-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="url(#logo-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs>
+              <linearGradient id="logo-grad" x1="2" y1="2" x2="22" y2="22" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#8B5CF6"/>
+                <stop offset="1" stop-color="#06B6D4"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
+        <h1>Assessment</h1>
+      </div>
+      <p class="auth-subtitle">Quantum Project Orchestration Engine</p>
+
+      <!-- Login Form -->
+      <form id="login-form" class="auth-form active">
+        <h2 class="form-title">Welcome Back</h2>
+        <p class="form-desc">Enter your access credentials to initialize workspace</p>
+        
+        <div class="input-group">
+          <label for="login-username">Username or Email</label>
+          <input type="text" id="login-username" required placeholder="e.g. admin or admin@example.com">
+        </div>
+        
+        <div class="input-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" required placeholder="••••••••">
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">
+          <span>Authorize Access</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+        
+        <p class="auth-toggle">New to Assessment? <a href="#" id="to-signup">Create an Account</a></p>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signup-form" class="auth-form">
+        <h2 class="form-title">Create Account</h2>
+        <p class="form-desc">Establish your profile and register as a pilot user</p>
+        
+        <div class="input-group">
+          <label for="signup-username">Username</label>
+          <input type="text" id="signup-username" required placeholder="e.g. pilot_john" minlength="3">
+        </div>
+        
+        <div class="input-group">
+          <label for="signup-email">Email Address</label>
+          <input type="email" id="signup-email" required placeholder="e.g. john@domain.com">
+        </div>
+        
+        <div class="input-group">
+          <label for="signup-password">Password</label>
+          <input type="password" id="signup-password" required placeholder="Min. 6 characters" minlength="6">
+        </div>
+        
+        <button type="submit" class="btn btn-primary btn-block">
+          <span>Register Workspace</span>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        
+        <p class="auth-toggle">Already registered? <a href="#" id="to-login">Log In</a></p>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP CONTAINER -->
+  <div id="app-screen" class="app-screen" style="display: none;">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="logo">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 17L12 22L22 17" stroke="#06B6D4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M2 12L12 17L22 12" stroke="#8B5CF6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span class="logo-text">Assessment</span>
+        </div>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button id="nav-dashboard" class="nav-item active">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+          <span>Dashboard</span>
+        </button>
+        
+        <div class="nav-section-title">Projects</div>
+        <div id="sidebar-projects-list" class="sidebar-projects-list">
+          <!-- Populated via JS -->
+        </div>
+
+        <button id="btn-new-project" class="btn btn-secondary btn-sm new-project-btn">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          <span>New Project</span>
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div class="avatar" id="user-avatar">AD</div>
+          <div class="user-info">
+            <span class="user-name" id="user-display-name">Admin User</span>
+            <span class="user-role" id="user-display-email">admin@example.com</span>
+          </div>
+        </div>
+        <button id="btn-logout" class="btn-logout" title="Log Out">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Top Action Bar -->
+      <header class="app-header">
+        <div class="project-header-info">
+          <h1 id="active-project-title">Helios Analytics</h1>
+          <p id="active-project-desc">Realtime telemetry optimization and dashboard telemetry data tracking</p>
+        </div>
+        <div class="header-actions">
+          <div class="members-overlap" id="project-members-preview" title="Project Members">
+            <!-- Populated via JS -->
+          </div>
+          <button id="btn-manage-members" class="btn btn-secondary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span>Team Roles</span>
+          </button>
+          <button id="btn-new-task" class="btn btn-primary">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            <span>Assign Task</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- View Selector (Tabs) -->
+      <div class="view-selector">
+        <button id="tab-dashboard" class="tab-btn active">Dashboard</button>
+        <button id="tab-board" class="tab-btn">Task Board</button>
+      </div>
+
+      <!-- VIEW 1: DASHBOARD VIEW -->
+      <section id="view-dashboard-panel" class="view-panel active">
+        <!-- Stats Cards Grid -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-icon icon-purple">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 11l3 3L22 4M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-total-tasks">0</span>
+              <span class="stat-label">Total Project Tasks</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/></svg>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-my-tasks">0</span>
+              <span class="stat-label">Tasks Assigned to Me</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-orange">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01"/></svg>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-high-priority">0</span>
+              <span class="stat-label">Unresolved High Priority</span>
+            </div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon icon-red">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+            </div>
+            <div class="stat-details">
+              <span class="stat-value" id="stat-overdue">0</span>
+              <span class="stat-label">Overdue Tasks</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dashboard Layout Split -->
+        <div class="dashboard-body">
+          <div class="dashboard-card main-chart-card">
+            <h3>Project Completion Velocity</h3>
+            <div class="progress-section">
+              <div class="progress-header">
+                <span>Task Distribution Status</span>
+                <span id="completion-percentage">0%</span>
+              </div>
+              <div class="progress-bar-container">
+                <div id="progress-bar-done" class="progress-part part-done" style="width: 0%"></div>
+                <div id="progress-bar-progress" class="progress-part part-progress" style="width: 0%"></div>
+                <div id="progress-bar-todo" class="progress-part part-todo" style="width: 0%"></div>
+              </div>
+              <div class="progress-legend">
+                <div class="legend-item"><span class="bullet bullet-done"></span>Done (<span id="legend-done-val">0</span>)</div>
+                <div class="legend-item"><span class="bullet bullet-progress"></span>In Progress (<span id="legend-progress-val">0</span>)</div>
+                <div class="legend-item"><span class="bullet bullet-todo"></span>To Do (<span id="legend-todo-val">0</span>)</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="dashboard-card sub-activity-card">
+            <h3>Active Project Insights</h3>
+            <div class="insights-list">
+              <div class="insight-item">
+                <span class="insight-label">Connected Workspaces</span>
+                <span class="insight-value" id="insight-projects-count">0</span>
+              </div>
+              <div class="insight-item">
+                <span class="insight-label">System Performance</span>
+                <span class="insight-value text-green">Optimal</span>
+              </div>
+              <div class="insight-item">
+                <span class="insight-label">Active Team Seat Role</span>
+                <span class="insight-value text-cyan" id="insight-user-role">Member</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- VIEW 2: TASK BOARD VIEW (KANBAN) -->
+      <section id="view-board-panel" class="view-panel">
+        <div class="kanban-board">
+          
+          <!-- Column 1: TODO -->
+          <div class="kanban-column" data-status="TODO">
+            <div class="column-header">
+              <div class="column-title-wrap">
+                <span class="column-dot dot-todo"></span>
+                <h2>To Do</h2>
+              </div>
+              <span class="task-count" id="count-todo">0</span>
+            </div>
+            <div class="task-list" id="list-todo">
+              <!-- Cards dynamically inserted -->
+            </div>
+          </div>
+
+          <!-- Column 2: IN_PROGRESS -->
+          <div class="kanban-column" data-status="IN_PROGRESS">
+            <div class="column-header">
+              <div class="column-title-wrap">
+                <span class="column-dot dot-progress"></span>
+                <h2>In Progress</h2>
+              </div>
+              <span class="task-count" id="count-progress">0</span>
+            </div>
+            <div class="task-list" id="list-progress">
+              <!-- Cards dynamically inserted -->
+            </div>
+          </div>
+
+          <!-- Column 3: DONE -->
+          <div class="kanban-column" data-status="DONE">
+            <div class="column-header">
+              <div class="column-title-wrap">
+                <span class="column-dot dot-done"></span>
+                <h2>Done</h2>
+              </div>
+              <span class="task-count" id="count-done">0</span>
+            </div>
+            <div class="task-list" id="list-done">
+              <!-- Cards dynamically inserted -->
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ---------------------------------------------------- -->
+  <!-- POPUP MODALS SECTION -->
+  <!-- ---------------------------------------------------- -->
+
+  <!-- Modal 1: Create Project -->
+  <div id="modal-project" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>Establish New Project</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="project-form">
+        <div class="input-group">
+          <label for="project-name">Project Name</label>
+          <input type="text" id="project-name" required placeholder="e.g. Artemis Launch System">
+        </div>
+        <div class="input-group">
+          <label for="project-desc">Description</label>
+          <textarea id="project-desc" rows="3" placeholder="Provide strategic intent or core purpose of this workspace..."></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-cancel">Cancel</button>
+          <button type="submit" class="btn btn-primary">Initialize Project</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 2: Create/Assign Task -->
+  <div id="modal-task" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2 id="task-modal-title">Draft Task Assignment</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      <form id="task-form">
+        <!-- Hidden field for task editing -->
+        <input type="hidden" id="task-edit-id" value="">
+        
+        <div class="input-group">
+          <label for="task-title">Task Title</label>
+          <input type="text" id="task-title" required placeholder="e.g. Calibrate sensor array metrics">
+        </div>
+        <div class="input-group">
+          <label for="task-desc">Description</label>
+          <textarea id="task-desc" rows="3" placeholder="Detail action steps, checklists, and goals..."></textarea>
+        </div>
+        
+        <div class="input-row">
+          <div class="input-group">
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+              <option value="LOW">Low</option>
+              <option value="MEDIUM" selected>Medium</option>
+              <option value="HIGH">High</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="task-status">Status</label>
+            <select id="task-status">
+              <option value="TODO" selected>To Do</option>
+              <option value="IN_PROGRESS">In Progress</option>
+              <option value="DONE">Done</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="input-row">
+          <div class="input-group">
+            <label for="task-assignee">Assignee</label>
+            <select id="task-assignee">
+              <option value="">Unassigned</option>
+              <!-- Populated dynamic project members -->
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="task-duedate">Due Date</label>
+            <input type="date" id="task-duedate">
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-cancel">Cancel</button>
+          <button type="button" id="btn-delete-task" class="btn btn-danger" style="display: none;">Delete</button>
+          <button type="submit" id="btn-submit-task" class="btn btn-primary">Assign Task</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal 3: Manage Project Team & Members -->
+  <div id="modal-members" class="modal-overlay">
+    <div class="modal-card modal-large">
+      <div class="modal-header">
+        <h2>Team Roles & Access Control</h2>
+        <button class="modal-close">&times;</button>
+      </div>
+      
+      <!-- Invite Member Form (Admins only) -->
+      <form id="member-invite-form" class="member-invite-form">
+        <h3>Assign Workspace Team Member</h3>
+        <div class="invite-inputs">
+          <div class="input-group">
+            <input type="text" id="invite-username" required placeholder="User username or registered email">
+          </div>
+          <div class="input-group">
+            <select id="invite-role">
+              <option value="Member" selected>Member (Edit Status Only)</option>
+              <option value="Admin">Admin (Full Control)</option>
+            </select>
+          </div>
+          <button type="submit" class="btn btn-primary">Assign Role</button>
+        </div>
+        <p class="role-explanatory-note">💡 Admins can edit all tasks, add members, and delete tasks. Members can only update task statuses.</p>
+      </form>
+
+      <!-- Active Members List -->
+      <div class="members-list-section">
+        <h3>Active Workspace Seats</h3>
+        <div class="members-table-container">
+          <table class="members-table">
+            <thead>
+              <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role Access</th>
+              </tr>
+            </thead>
+            <tbody id="modal-members-table-body">
+              <!-- Dynamically populated rows -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary btn-close-modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Main Javascript Code -->
+  <script src="app.js"></script>
+</body>
+</html>
